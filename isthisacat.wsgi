@@ -7,3 +7,5 @@ import sys
 head, tail = os.path.split(os.path.abspath(__file__))
 sys.path.insert(0, head)
 from isthisacat import app as application
+from isthisacat import init_db
+init_db()

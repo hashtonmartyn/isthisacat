@@ -42,10 +42,12 @@ def init_db():
 
 @app.route("/")
 def index():
-    if request.cookies.get("voted"):
-        pass
-    else:
+    if request.cookies.get("voted") is None:
         return render_template("index_no_vote.html")
+    else:
+        return render_template("index_already_voted.html",
+                               num_yes_votes=2,
+                               num_no_votes=5)
 
 @app.route("/vote", methods=["POST"])
 def vote():
@@ -54,8 +56,9 @@ def vote():
     db = get_db()
     db.execute("INSERT INTO votes (iscat) Values ('%s')" % request.form["iscat"])
     db.commit()
-    request.cookies.
-    return redirect("/")
+    response = app.make_response(redirect("/"))
+    response.set_cookie("voted")
+    return response
 
 @csrf.error_handler
 def csrf_error(reason):

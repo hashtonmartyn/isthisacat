@@ -13,7 +13,7 @@ DATABASE_PATH_KEY = "DATABASE_PATH"
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.urandom(24)
-app.config[DATABASE_PATH_KEY] = os.path.abspath(os.path.join(os.getcwd(),
+app.config[DATABASE_PATH_KEY] = os.path.abspath(os.path.join(os.path.realpath(__file__),
                                                              os.pardir,
                                                              os.pardir,
                                                              "database.db"))

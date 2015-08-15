@@ -45,9 +45,16 @@ def index():
     if request.cookies.get("voted") is None:
         return render_template("index_no_vote.html")
     else:
+        db = get_db()
+        cursor = db.execute("SELECT COUNT(*) FROM votes where iscat=='TRUE'")
+        num_yes_votes = cursor.fetchall()
+        cursor.close()
+        cursor = db.execute("SELECT COUNT(*) FROM votes where iscat=='FALSE'")
+        num_no_votes = cursor.fetchall()
+        cursor.close()
         return render_template("index_already_voted.html",
-                               num_yes_votes=2,
-                               num_no_votes=5)
+                               num_yes_votes=num_yes_votes[0][0],
+                               num_no_votes=num_no_votes[0][0])
 
 @app.route("/vote", methods=["POST"])
 def vote():

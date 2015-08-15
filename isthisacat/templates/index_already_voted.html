@@ -1,23 +1,25 @@
 {% extends "index_base.html" %}
 {% block third_panel %}
-<h3>Voted!</h3>
-<canvas id="myChart" width="400" height="400"></canvas>
+<h3>You have voted here, results:</h3>
+<canvas id="myChart"></canvas>
 <script>
 	var ctx = document.getElementById("myChart").getContext("2d");
 	var data = [
 	    {
 	        value: {{ num_yes_votes }},
-	        color:"#F7464A",
-	        highlight: "#FF5A5E",
-	        label: "Red"
+	        color:"#5cb85c",
+	        highlight: "#6cb85c",
+	        label: "Yes Gus is a cat"
 	    },
 	    {
 	        value: {{ num_no_votes }},
-	        color: "#46BFBD",
-	        highlight: "#5AD3D1",
-	        label: "Green"
+	        color: "#d9534f",
+	        highlight: "#e9534f",
+	        label: "No Gus is not a cat"
 	    }
 	];
+	Chart.defaults.global.responsive = true;
+	Chart.defaults.global.maintainAspectRatio = true;
 	var pieChart = new Chart(ctx).Pie(data);
 </script>
 {% endblock %}

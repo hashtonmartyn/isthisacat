@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			Whoops! Looks like something went wrong with your vote:
+		</div>
+		<div class="row">
+			{{ reason }}
+		</div>
+		<div class="row">
+			<a href="/">Take me back to try and vote again</a>
+		</div>
+	</div>
+{% endblock %}

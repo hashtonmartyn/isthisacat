@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<img class="gusImage img-responsive center-block" src="{{ url_for('static', filename='gus.jpg') }}">
+	</div>
+	<div class="row">
+		<div class="col-md-6 aboutThisSiteBox">
+			<h3>Why does this website exist?</h3>
+			For a long time Gus was just like any other large ginger cat from a good family;
+			happy, but for whatever reason self-doubt set in. His self-doubt manifests as him
+			questioning the nature of his existence and these questions center around the 
+			premise of this website; is he a cat?
+			<br><br>
+			My efforts to reassure him that he is in 
+			fact a cat have been fruitless. He's fully aware that I'm not an impartial judge 
+			so this poll of internet strangers is intended to prove to him that people other 
+			than me believe that he is a cat. 			
+		</div>
+		<div class="col-md-6">
+			{% block third_panel %}{% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}

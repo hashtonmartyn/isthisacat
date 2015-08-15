@@ -1,0 +1,14 @@
+{% extends "index_base.html" %}
+{% block third_panel %}
+<h3>Is this a cat?</h3>
+<form method="post" action="/vote">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+	<div class="yesRadioButton bg-success">
+		<input type="radio" name="iscat" value="TRUE" checked>Yes, this is a cat</input>
+	</div>
+	<div class="noRadioButton bg-danger">
+		<input type="radio" name="iscat" value="FALSE">No, this is not a cat</input>
+	</div>
+	<input type="submit" class="btn btn-primary submitButton" value="Submit"></input>
+</form>
+{% endblock %}

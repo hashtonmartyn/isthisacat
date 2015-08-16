@@ -1,6 +1,6 @@
 {% extends "index_base.html" %}
 {% block third_panel %}
-<h3>You have voted here, results:</h3>
+<h3>Results so far</h3>
 <canvas id="myChart"></canvas>
 <script>
 	var ctx = document.getElementById("myChart").getContext("2d");
@@ -9,13 +9,13 @@
 	        value: {{ num_yes_votes }},
 	        color:"#5cb85c",
 	        highlight: "#6cb85c",
-	        label: "Yes Gus is a cat"
+	        label: "Gus is a cat"
 	    },
 	    {
 	        value: {{ num_no_votes }},
 	        color: "#d9534f",
 	        highlight: "#e9534f",
-	        label: "No Gus is not a cat"
+	        label: "Gus is not a cat"
 	    }
 	];
 	Chart.defaults.global.responsive = true;

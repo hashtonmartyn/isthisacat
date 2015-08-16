@@ -93,7 +93,6 @@ class TestIsThisACat(unittest.TestCase):
         self.assertEqual(404, self.test_client.get("/votes/no").status_code)
         
 
-
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    #import sys;sys.argv = ['', 'Test.testName'] asd
     unittest.main()

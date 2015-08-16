@@ -42,22 +42,48 @@ def init_db():
         with app.open_resource(schema_path, mode="r") as f:
             db.cursor().executescript(f.read())
         db.commit()
+        
+def _get_votes(iscat):
+    db = get_db()
+    cursor = db.execute("SELECT COUNT(*) FROM votes where iscat=='%s'" % iscat)
+    num_votes = cursor.fetchall()
+    cursor.close()    
+    return int(num_votes[0][0])
+    
+def get_yes_votes():
+    return _get_votes("TRUE")
+
+def get_no_votes():
+    return _get_votes("FALSE")
+
+@app.route("/votes/yes")
+def yes_votes():
+    """
+    Test interface, shouldn't be exposed in production
+    """
+    if app.config.get("TESTING") is True:
+        return str(get_yes_votes())
+    abort(404)
+        
+@app.route("/votes/no")
+def no_votes():
+    """
+    Test interface, shouldn't be exposed in production
+    """
+    if app.config.get("TESTING") is True:
+        return str(get_no_votes())
+    abort(404)
 
 @app.route("/")
 def index():
     if request.cookies.get("voted") is None:
         return render_template("index_no_vote.html")
     else:
-        db = get_db()
-        cursor = db.execute("SELECT COUNT(*) FROM votes where iscat=='TRUE'")
-        num_yes_votes = cursor.fetchall()
-        cursor.close()
-        cursor = db.execute("SELECT COUNT(*) FROM votes where iscat=='FALSE'")
-        num_no_votes = cursor.fetchall()
-        cursor.close()
+        num_yes_votes = get_yes_votes()
+        num_no_votes = get_no_votes()
         return render_template("index_already_voted.html",
-                               num_yes_votes=num_yes_votes[0][0],
-                               num_no_votes=num_no_votes[0][0])
+                               num_yes_votes=num_yes_votes,
+                               num_no_votes=num_no_votes)
 
 @app.route("/vote", methods=["POST"])
 def vote():
@@ -82,7 +108,7 @@ def error_code_400(error):
     except AttributeError:
         # If it's not a CSRF error then it's just a normal error
         pass
-    return render_template("csrf_error.html", reason=error)
+    return render_template("csrf_error.html", reason=error), 400
     
 if __name__ == "__main__":
     app.config[DATABASE_PATH_KEY] = "database.db"

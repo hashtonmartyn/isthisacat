@@ -12,7 +12,8 @@ from contextlib import closing
 DATABASE_PATH_KEY = "DATABASE_PATH"
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.urandom(24)
+app.config["SECRET_KEY"] = os.environ.get("ISTHISACAT_SECRET_KEY",
+                                          "test_key")
 app.config[DATABASE_PATH_KEY] = os.path.abspath(os.path.join(os.path.realpath(__file__),
                                                              os.pardir,
                                                              os.pardir,
